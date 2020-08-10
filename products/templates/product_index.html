@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+
+
+<h1>Hello, {{ user.username|default:'Guest' }}!</h1>
+<h2>Products</h2>
+ <label for="test-suite">Select one test suite</label>
+<div class="index">
+<select class='select_class' name="cars" id="cars" size=10 onchange="document.location.href=this.value">
+    <!-- document.location.href=this.value -->
+<!-- <select class='select_class' name="cars" id="cars" size=10 onchange=""
+                   class="btn btn-primary""> -->
+{% for product in products_key %}
+    <option value={{ product.id }} {% if product.title == product_key.title %}selected{% endif %} >{{ product.title }}</option>
+{% endfor %}
+</select>
+</div>
+
+{% if product_key %}
+<div class="row">
+<div class="col-md-4">
+        <div class="card mb-2">
+            <div class="card-body">
+                <h5 class="card-title">{{ product_key.title }}</h5>
+                <p class="card-text">{{ product_key.description }}</p>
+                <p class="card-text">{{ product_key.price }}</p>
+                <p class="card-text">{{ product_key.pk }}</p>
+                <a href="{% url 'product_class_detail' product_key.pk %}"
+                   class="btn btn-primary">
+                    View Detail
+                </a>
+                <a href="{% url 'product_class_update' product_key.pk %}"
+                   class="btn btn-primary">
+                    Update
+                </a>
+                <a href="{% url 'product_class_delete' product_key.pk %}"
+                   class="btn btn-primary">
+                    Delete
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+

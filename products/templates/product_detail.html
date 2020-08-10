@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_content %}
+<h1>{{ product_key.title }}</h1>
+<div class="row">
+    <div class="col-md-4">
+        <h5>About the product:</h5>
+        <p>{{ product_key.description }}</p>
+        <br>
+        <h5>price is:</h5>
+        <p>{{ product_key.price }}</p>
+        <h5>Summary is:</h5>
+        <p>{{ product_key.summary }}</p>
+    </div>
+</div>
+{% endblock %}

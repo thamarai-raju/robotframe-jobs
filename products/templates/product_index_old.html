@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+<h1>Products</h1>
+<div class="row">
+{% for product in products_key %}
+    <div class="col-md-4">
+        <div class="card mb-2">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.title }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+                <p class="card-text">{{ product.price }}</p>
+                <p class="card-text">{{ product.pk }}</p>
+                <a href="{% url 'product_class_detail' product.pk %}"
+                   class="btn btn-primary">
+                <!-- <a href = 'main/{{ product.pk }}' class="btn btn-primary"> -->
+                    View Detail
+                </a>
+                <a href="{% url 'product_class_update' product.pk %}"
+                   class="btn btn-primary">
+                    Update
+                </a>
+                <a href="{% url 'product_class_delete' product.pk %}"
+                   class="btn btn-primary">
+                    Delete
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
