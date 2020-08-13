@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.views import View
 from lib.django.robot_execute import RobotExecute
+from .models import *
 import threading
 import time
 import re
@@ -13,6 +14,23 @@ class GetRobotService():
 	def get_robot_service(self):
 		return RobotExecute()
 
+class GetModelInfo():
+
+	def get_feature_by_tag(self, group_name):
+		return list(set([x.testsuite for x in Testdata.objects.filter(tag__name=group_name)]))
+
+	def get_testsuites_by_feature(self, group_name, feature_name):
+		return list(set([x.testfile for x in Testdata.objects.
+		 				filter(tag__name=group_name).filter(testsuite=feature_name)]))
+	# def get_testsuite_by_tag(self, group_name):
+
+	def get_testcases_by_testsuite(self, group_name, feature_name, testsuite_name):
+		return list(set([x.testcase for x in Testdata.objects.
+		 				filter(tag__name=group_name).filter(testsuite=feature_name).
+		 				filter(testfile=testsuite_name)]))
+
+
+
 class JobScheduler(View):
 	template_name = 'job_scheduler.html'
 	robot_data = GetRobotService().get_robot_service()
@@ -21,17 +39,18 @@ class JobScheduler(View):
 		suite_info, job_group_info = self.robot_data.get_suiteinfo()
 
 		#get all job groups
-		job_group_info_view = job_group_info.keys()
+		# job_group_info_view = job_group_info.keys()
 		#add the full and custom to the above
-		job_group_info_view.extend(['full','custom'])
-		job_group_selected = 'sanity'
+		job_group_info_view = ['Sanity','Intermediate','Full','Custom']
+		# job_group_selected = 'Sanity'
+		# job_group_selected = None
 		job_run_list = None
 		test_suite_list = None
 		test_case_list = None
 		
 		context = {
 		'job_groups': job_group_info_view,
-		'job_group_selected': job_group_selected,
+		# 'job_group_selected': job_group_selected,
 		'job_run_list': job_run_list,
 		'test_suite_list': test_suite_list,
 		'test_case_list': test_case_list
@@ -47,29 +66,39 @@ class JobScheduler(View):
 class JobGroup(View):
 	template_name = 'job_scheduler.html'
 	robot_data = GetRobotService().get_robot_service()
+	get_model_info = GetModelInfo()
 	
 	def get(self, request, job_group_selected=None, *args, **kwargs):
-		suite_info, job_group_info = self.robot_data.get_suiteinfo()
+		# suite_info, job_group_info = self.robot_data.get_suiteinfo()
 
-		#get all job groups
-		job_group_info_view = job_group_info.keys()
+		# #get all job groups
+		# job_group_info_view = job_group_info.keys()
 		#add the full and custom to the above
-		job_group_info_view.extend(['full','custom'])
+		job_group_info_view = ['Sanity','Intermediate','Full','Custom']
 		
 		#get the list of suite names in the group
-		job_run_list = job_group_info[job_group_selected].keys()
-		# job_run_list = ['VPN', 'ROUTING']
-			
-		# job_run_list = None
-		test_suite_list = None
-		test_case_list = None
-		
+		job_run_list = self.get_model_info.get_feature_by_tag(job_group_selected)
+		if job_group_selected != 'Custom':
+			job_feature_selected = job_run_list[0]
+		else:
+			job_feature_selected = None
+
+		test_suite_list = self.get_model_info.get_testsuites_by_feature(job_group_selected, job_feature_selected)
+		if job_group_selected != 'Custom':
+			job_testsuite_selected = test_suite_list[0]
+		else:
+			job_testsuite_selected = None
+		test_case_list = self.get_model_info.get_testcases_by_testsuite(job_group_selected, job_feature_selected,
+								job_testsuite_selected)
+
 		
 		context = {
 		'job_groups': job_group_info_view,
 		'job_group_selected': job_group_selected,
 		'job_run_list': job_run_list,
+		'job_feature_selected': job_feature_selected,
 		'test_suite_list': test_suite_list,
+		'job_testsuite_selected': job_testsuite_selected,
 		'test_case_list': test_case_list
 		}
 
@@ -82,25 +111,26 @@ class JobGroup(View):
 class JobFeature(View):
 	template_name = 'job_scheduler.html'
 	robot_data = GetRobotService().get_robot_service()
-	
-	def get(self, request, job_group_selected=None, job_feature_selected=None, *args, **kwargs):
-		suite_info, job_group_info = self.robot_data.get_suiteinfo()
+	get_model_info = GetModelInfo()
 
-		#get all job groups
-		job_group_info_view = job_group_info.keys()
+	def get(self, request, job_group_selected=None, job_feature_selected=None, *args, **kwargs):
+		# suite_info, job_group_info = self.robot_data.get_suiteinfo()
+
+		# #get all job groups
+		# job_group_info_view = job_group_info.keys()
 		#add the full and custom to the above
-		job_group_info_view.extend(['full','custom'])
+		job_group_info_view = ['Sanity','Intermediate','Full','Custom']
 		
 		#get the list of suite names in the group
-		job_run_list = job_group_info[job_group_selected].keys()
-		# job_run_list = ['VPN', 'ROUTING']
+		job_run_list = self.get_model_info.get_feature_by_tag(job_group_selected)
 		
-		#get the testsuite list
-		test_suite_list = ['testsuite1','testsuite2']
-
-		# job_run_list = None
-		# test_suite_list = None
-		test_case_list = None
+		test_suite_list = self.get_model_info.get_testsuites_by_feature(job_group_selected, job_feature_selected)
+		if job_group_selected != 'Custom':
+			job_testsuite_selected = test_suite_list[0]
+		else:
+			job_testsuite_selected = None
+		test_case_list = self.get_model_info.get_testcases_by_testsuite(job_group_selected, job_feature_selected,
+								job_testsuite_selected)
 
 		context = {
 		'job_groups': job_group_info_view,
@@ -108,6 +138,7 @@ class JobFeature(View):
 		'job_run_list': job_run_list,
 		'job_feature_selected': job_feature_selected,
 		'test_suite_list': test_suite_list,
+		'job_testsuite_selected': job_testsuite_selected,
 		'test_case_list': test_case_list
 		}
 
@@ -121,24 +152,18 @@ class JobFeature(View):
 class JobTestsuite(View):
 	template_name = 'job_scheduler.html'
 	robot_data = GetRobotService().get_robot_service()
-	
-	def get(self, request, job_group_selected=None, job_feature_selected=None,job_testsuite_selected=None, *args, **kwargs):
-		suite_info, job_group_info = self.robot_data.get_suiteinfo()
+	get_model_info = GetModelInfo()
 
-		#get all job groups
-		job_group_info_view = job_group_info.keys()
+	def get(self, request, job_group_selected=None, job_feature_selected=None,job_testsuite_selected=None, *args, **kwargs):
+
 		#add the full and custom to the above
-		job_group_info_view.extend(['full','custom'])
+		job_group_info_view = ['Sanity','Intermediate','Full','Custom']
 		
 		#get the list of suite names in the group
-		job_run_list = job_group_info[job_group_selected].keys()
-		# job_run_list = ['VPN', 'ROUTING']
-		
-		#get the testsuite list
-		test_suite_list = ['testsuite1','testsuite2']
-
-		#get the testcase list
-		test_case_list = ['testcase1', 'testcase2']
+		job_run_list = self.get_model_info.get_feature_by_tag(job_group_selected)
+		test_suite_list = self.get_model_info.get_testsuites_by_feature(job_group_selected, job_feature_selected)
+		test_case_list = self.get_model_info.get_testcases_by_testsuite(job_group_selected, job_feature_selected,
+								job_testsuite_selected)
 
 		context = {
 		'job_groups': job_group_info_view,
@@ -167,7 +192,8 @@ class JobRobotRun(View):
 class JobView(View):
 	template_name = 'job_view.html'
 	robot_data = GetRobotService().get_robot_service()
-	
+	get_model_info = GetModelInfo()
+
 	def get(self, request, job_group_selected=None, time_stamp=None, *args, **kwargs):
 		input_job_d = [
 			{
@@ -182,8 +208,8 @@ class JobView(View):
 			{
 				'testsuite_id':'2',
 				'suite_name':'route_manager_cli_tests',
-				'include_tags':['sanity'],
-				# 'exclude_tags':['sanity'],
+				'include_tags':['Sanity'],
+				# 'exclude_tags':['Sanity'],
 				'testcases':[],
 			},
 			# {
@@ -194,11 +220,15 @@ class JobView(View):
 			# 	'testcases':['Changes for colgate customer config'],
 			# }
 		]
-		
-		# self.robot_data.run_jobs(input_job_d)
+		# job_run_list = self.get_model_info.get_testsuite_by_tag(job_group_selected)
+		# for each_job_run_list in job_run_list:
+
+
+		self.robot_data.run_jobs(input_job_d)
 		
 		# download_thread = threading.Thread(target=self.robot_data.run_jobs, args=input_job_d)
 		# download_thread.start()
+
 		job_result_data_service = self.robot_data.get_status(time_stamp)
 		#get suite name
 		job_name = '-'.join(job_result_data_service.get('job_name'))
