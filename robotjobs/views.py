@@ -13,7 +13,7 @@ import re
 
 
 class GetRobotService():
-	
+
 	def get_robot_service(self):
 		return RobotExecute()
 
@@ -237,8 +237,9 @@ class JobView(View):
 				count += 1
 				input_job_d.append(each_input_job_d)
 
-			print(input_job_d)
+			print('STARTED')
 			self.robot_data.run_jobs(input_job_d)
+			print('END')
 		
 			# download_thread = threading.Thread(target=self.robot_data.run_jobs, args=input_job_d)
 			# download_thread.start()

@@ -1,0 +1,15 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+django = "==1.11.*"
+celery = "==3.1.*"
+redis = "==2.10.3"
+robot = "*"
+
+[requires]
+python_version = "2.7"
