@@ -20,6 +20,7 @@ from products import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^robotframe/', include('products.urls')),
+    #url(r'^products/', include('products.urls')),
+    url(r'^robotjobs/', include('robotjobs.urls')),
     url('home', views.hello_world, name='hello_world'),
 ]

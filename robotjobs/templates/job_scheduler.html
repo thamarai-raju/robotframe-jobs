@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+
+<link rel="stylesheet" href="{% static '/main.css' %}">
+
+<h2>Job Scheduler</h2>
+ <label for="test-suite">Select one job group</label>
+
+
+<div class="row">
+        <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
+            JOB TYPE
+            {% for each_job_group in job_groups %}
+            <a class="dropdown-item" href="{% url 'job_group' each_job_group %}">{{ each_job_group }} </a>
+            {% endfor %}
+        </nav>
+    </div>
+
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    {{ job_group_selected }}
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+{% for each_job_group in job_groups %}
+    <a class="dropdown-item" href="{% url 'job_group' each_job_group %}">{{ each_job_group }} </a>
+{% endfor %}
+</div>
+</div>
+
+
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    {{ job_feature_selected }}
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+{% for each_job_run_list in job_run_list %}
+    <a class="dropdown-item" href="{% url 'job_feature' job_group_selected each_job_run_list %}">{{ each_job_run_list }} </a>
+{% endfor %}
+</div>
+</div>
+
+<div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    {{ job_testsuite_selected }}
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+{% for each_test_suite_list in test_suite_list %}
+    <a class="dropdown-item" href="{% url 'job_testsuite' job_group_selected job_feature_selected each_test_suite_list %}">{{ each_test_suite_list }} </a>
+{% endfor %}
+</div>
+</div>
+
+
+<div class="dropdown">
+  	<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    All testcases are shown
+  	</button>
+	<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+		{% for each_test_case_list in test_case_list %}
+		    <a class="dropdown-item">{{ each_test_case_list }} </a>
+		{% endfor %}
+	</div>
+</div>
+
+              
+<a href="{% url 'job_robot_run' job_group_selected %}"
+                   class="btn btn-primary">
+                    RunJob
+                </a>
+
+
+{% endblock %}
+

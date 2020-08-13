@@ -1,0 +1,3 @@
+window.keywords2 = [[0,1,2,0,3,4,0,0,[1,68,0],[],[[68,0,5],[68,0,6]]],[0,7,2,0,8,9,0,0,[1,68,1],[[0,10,11,0,0,0,0,0,[1,68,1],[],[[68,0,12],[68,0,13]]]],[[68,0,14],[69,0,13]]]];
+window.strings2 = ["*","*Log","*BuiltIn","*<p>Logs the given message with the given level.\x3c/p>","*Verify all MGMT interfaces on HUB","*Arguments: [ 'Verify all MGMT interfaces on HUB' ]","*Return: None","*Run Keyword And Continue On Failure","*<p>Runs the keyword and continues execution even if a failure occurs.\x3c/p>","*Verify Hub Rules MGMT Interfaces","*Verify Hub Rules Mgmt Interfaces","*lib.features.routing.VerifyElemIpRuleInfo","*Arguments: [  ]","*Return: True","*Arguments: [ 'Verify Hub Rules MGMT Interfaces' ]"];
+window.fileLoading.notify("2_log-2.js");

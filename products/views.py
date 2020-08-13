@@ -136,6 +136,8 @@ class ProductClassView(View):
 					'products_key': products,
 					'product_key' : product
 				}
+		#CALL ur python script 
+
 		return render(request, self.template_name, context)
 
 	def post(self, request, *args, **kwargs):

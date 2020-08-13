@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     #own
     'products',
+    'robotjobs',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'django_robot.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['products/templates/'],
+        'DIRS': ['robotjobs/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,4 +125,6 @@ STATIC_URL = '/static/'
 
 
 #custom variables
-LOGIN_REDIRECT_URL = '/robotframe/products/'
+LOGIN_REDIRECT_URL = '/robotjobs/scheduler/'
+LOGOUT_REDIRECT_URL = "/robotjobs/scheduler/"
+

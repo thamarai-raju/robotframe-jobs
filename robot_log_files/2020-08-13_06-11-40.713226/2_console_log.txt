@@ -1,0 +1,34 @@
+==============================================================================
+Tests                                                                         
+==============================================================================
+Tests.Routing :: Scale test suite                                             
+==============================================================================
+Tests.Routing.Route Manager Cli Tests :: Test Demo Script                     
+==============================================================================
+Verify IP Rule table PUBLIC interfaces for HUB Elements               | FAIL |
+test failure
+------------------------------------------------------------------------------
+Verify IP Rule table MGMT interfaces for HUB Elements                 | PASS |
+------------------------------------------------------------------------------
+Verify IP Rule table Private interfaces for HUB Elements              | PASS |
+------------------------------------------------------------------------------
+Verify IP Rule table PUBLIC interfaces for SPOKE Elements             | PASS |
+------------------------------------------------------------------------------
+Verify IP Rule table MGMT interfaces for SPOKE Elements               | FAIL |
+test failure
+------------------------------------------------------------------------------
+Tests.Routing.Route Manager Cli Tests :: Test Demo Script             | FAIL |
+5 critical tests, 3 passed, 2 failed
+5 tests total, 3 passed, 2 failed
+==============================================================================
+Tests.Routing :: Scale test suite                                     | FAIL |
+5 critical tests, 3 passed, 2 failed
+5 tests total, 3 passed, 2 failed
+==============================================================================
+Tests                                                                 | FAIL |
+5 critical tests, 3 passed, 2 failed
+5 tests total, 3 passed, 2 failed
+==============================================================================
+Output:  /home/ubuntu/my_scripts/django_robot/robot_log_files/2020-08-13_06-11-40.713226/2_output.xml
+Log:     /home/ubuntu/my_scripts/django_robot/robot_log_files/2020-08-13_06-11-40.713226/2_log.html
+Report:  /home/ubuntu/my_scripts/django_robot/robot_log_files/2020-08-13_06-11-40.713226/2_report.html

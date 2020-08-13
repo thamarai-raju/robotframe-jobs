@@ -1,0 +1,17 @@
+navbar.navbar-expand-lg.navbar-light.bg-dark{
+    color: white;
+}
+​
+.navbar.small {
+    width: 30%;
+    margin-left: 50px;
+}
+​
+.navbar.medium {
+    width: 80%;
+    margin-left: 50px;
+}
+​
+.table {
+    margin: 0px;
+}

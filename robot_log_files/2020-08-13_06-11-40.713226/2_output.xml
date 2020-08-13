@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generated="20200813 06:11:41.847" generator="Robot 3.0.2 (Python 2.7.12 on linux2)">
+<suite source="/home/ubuntu/roboframe/tests" id="s1" name="Tests">
+<suite source="/home/ubuntu/roboframe/tests/routing" id="s1-s1" name="Routing">
+<kw type="setup" name="Setup Suite">
+<kw name="Set Log Level" library="BuiltIn">
+<doc>Sets the log threshold to the specified level and returns the old level.</doc>
+<arguments>
+<arg>TRACE</arg>
+</arguments>
+<msg timestamp="20200813 06:11:41.897" level="TRACE">Return: b'INFO'</msg>
+<status status="PASS" endtime="20200813 06:11:41.897" starttime="20200813 06:11:41.897"></status>
+</kw>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${duts_list}"!="none"</arg>
+<arg>setup_testrun_env</arg>
+<arg>/home/ubuntu/roboframe/tests/routing</arg>
+</arguments>
+<msg timestamp="20200813 06:11:41.904" level="TRACE">Arguments: [ '"none"!="none"' | 'setup_testrun_env' | '/home/ubuntu/roboframe/tests/routing' ]</msg>
+<msg timestamp="20200813 06:11:41.904" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20200813 06:11:41.904" starttime="20200813 06:11:41.898"></status>
+</kw>
+<msg timestamp="20200813 06:11:41.904" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20200813 06:11:41.904" starttime="20200813 06:11:41.897"></status>
+</kw>
+<suite source="/home/ubuntu/roboframe/tests/routing/route_manager_cli_tests.robot" id="s1-s1-s1" name="Route Manager Cli Tests">
+<test id="s1-s1-s1-t1" name="Verify IP Rule table PUBLIC interfaces for HUB Elements">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Verify all PUBLIC interfaces on HUB</arg>
+</arguments>
+<msg timestamp="20200813 06:11:41.914" level="TRACE">Arguments: [ 'Verify all PUBLIC interfaces on HUB' ]</msg>
+<msg timestamp="20200813 06:11:41.914" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20200813 06:11:41.914" starttime="20200813 06:11:41.914"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>Verify Hub Rules Public Interfaces</arg>
+</arguments>
+<msg timestamp="20200813 06:11:41.914" level="TRACE">Arguments: [ 'Verify Hub Rules Public Interfaces' ]</msg>
+<kw name="Verify Hub Rules Public Interfaces" library="lib.features.routing.VerifyElemIpRuleInfo">
+<msg timestamp="20200813 06:11:41.915" level="TRACE">Arguments: [  ]</msg>
+<msg timestamp="20200813 06:11:41.918" level="FAIL">test failure</msg>
+<msg timestamp="20200813 06:11:41.919" level="DEBUG">Traceback (most recent call last):
+  File "/home/ubuntu/roboframe/lib/features/routing/VerifyElemIpRuleInfo.py", line 15, in verify_hub_rules_public_interfaces
+    assert False, 'test failure'</msg>
+<status status="FAIL" endtime="20200813 06:11:41.919" starttime="20200813 06:11:41.915"></status>
+</kw>
+<msg timestamp="20200813 06:11:41.919" level="TRACE">Return: None</msg>
+<status status="FAIL" endtime="20200813 06:11:41.919" starttime="20200813 06:11:41.914"></status>
+</kw>
+<tags>
+<tag>intermediate</tag>
+<tag>sanity</tag>
+</tags>
+<status status="FAIL" endtime="20200813 06:11:41.919" critical="yes" starttime="20200813 06:11:41.913">test failure</status>
+</test>
+<test id="s1-s1-s1-t2" name="Verify IP Rule table MGMT interfaces for HUB Elements">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Verify all MGMT interfaces on HUB</arg>
+</arguments>
+<msg timestamp="20200813 06:11:41.920" level="TRACE">Arguments: [ 'Verify all MGMT interfaces on HUB' ]</msg>
+<msg timestamp="20200813 06:11:41.920" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20200813 06:11:41.920" starttime="20200813 06:11:41.920"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>Verify Hub Rules MGMT Interfaces</arg>
+</arguments>
+<msg timestamp="20200813 06:11:41.920" level="TRACE">Arguments: [ 'Verify Hub Rules MGMT Interfaces' ]</msg>
+<kw name="Verify Hub Rules Mgmt Interfaces" library="lib.features.routing.VerifyElemIpRuleInfo">
+<msg timestamp="20200813 06:11:41.920" level="TRACE">Arguments: [  ]</msg>
+<msg timestamp="20200813 06:11:41.920" level="TRACE">Return: True</msg>
+<status status="PASS" endtime="20200813 06:11:41.921" starttime="20200813 06:11:41.920"></status>
+</kw>
+<msg timestamp="20200813 06:11:41.921" level="TRACE">Return: True</msg>
+<status status="PASS" endtime="20200813 06:11:41.921" starttime="20200813 06:11:41.920"></status>
+</kw>
+<tags>
+<tag>intermediate</tag>
+<tag>sanity</tag>
+</tags>
+<status status="PASS" endtime="20200813 06:11:41.921" critical="yes" starttime="20200813 06:11:41.919"></status>
+</test>
+<test id="s1-s1-s1-t3" name="Verify IP Rule table Private interfaces for HUB Elements">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Verify all Private interfaces on HUB</arg>
+</arguments>
+<msg timestamp="20200813 06:11:41.921" level="TRACE">Arguments: [ 'Verify all Private interfaces on HUB' ]</msg>
+<msg timestamp="20200813 06:11:41.922" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20200813 06:11:41.922" starttime="20200813 06:11:41.921"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>Verify Hub Rules Private Interfaces</arg>
+</arguments>
+<msg timestamp="20200813 06:11:41.922" level="TRACE">Arguments: [ 'Verify Hub Rules Private Interfaces' ]</msg>
+<kw name="Verify Hub Rules Private Interfaces" library="lib.features.routing.VerifyElemIpRuleInfo">
+<msg timestamp="20200813 06:11:41.922" level="TRACE">Arguments: [  ]</msg>
+<msg timestamp="20200813 06:11:41.922" level="TRACE">Return: True</msg>
+<status status="PASS" endtime="20200813 06:11:41.922" starttime="20200813 06:11:41.922"></status>
+</kw>
+<msg timestamp="20200813 06:11:41.922" level="TRACE">Return: True</msg>
+<status status="PASS" endtime="20200813 06:11:41.922" starttime="20200813 06:11:41.922"></status>
+</kw>
+<tags>
+<tag>intermediate</tag>
+<tag>sanity</tag>
+</tags>
+<status status="PASS" endtime="20200813 06:11:41.922" critical="yes" starttime="20200813 06:11:41.921"></status>
+</test>
+<test id="s1-s1-s1-t4" name="Verify IP Rule table PUBLIC interfaces for SPOKE Elements">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Verify all PUBLIC interfaces on SPOKE</arg>
+</arguments>
+<msg timestamp="20200813 06:11:41.923" level="TRACE">Arguments: [ 'Verify all PUBLIC interfaces on SPOKE' ]</msg>
+<msg timestamp="20200813 06:11:41.923" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20200813 06:11:41.923" starttime="20200813 06:11:41.923"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>Verify Spoke Rules Public Interfaces</arg>
+<arg>test_type=${test_type}</arg>
+</arguments>
+<msg timestamp="20200813 06:11:41.924" level="TRACE">Arguments: [ 'Verify Spoke Rules Public Interfaces' | 'test_type=${test_type}' ]</msg>
+<kw name="Verify Spoke Rules Public Interfaces" library="lib.features.routing.VerifyElemIpRuleInfo">
+<arguments>
+<arg>test_type=${test_type}</arg>
+</arguments>
+<msg timestamp="20200813 06:11:41.924" level="TRACE">Arguments: [ test_type='compare_baseline' ]</msg>
+<msg timestamp="20200813 06:11:41.924" level="TRACE">Return: True</msg>
+<status status="PASS" endtime="20200813 06:11:41.924" starttime="20200813 06:11:41.924"></status>
+</kw>
+<msg timestamp="20200813 06:11:41.924" level="TRACE">Return: True</msg>
+<status status="PASS" endtime="20200813 06:11:41.924" starttime="20200813 06:11:41.923"></status>
+</kw>
+<tags>
+<tag>intermediate</tag>
+<tag>sanity</tag>
+</tags>
+<status status="PASS" endtime="20200813 06:11:41.924" critical="yes" starttime="20200813 06:11:41.923"></status>
+</test>
+<test id="s1-s1-s1-t5" name="Verify IP Rule table MGMT interfaces for SPOKE Elements">
+<kw name="Log" library="BuiltIn">
+<doc>Logs the given message with the given level.</doc>
+<arguments>
+<arg>Verify all MGMT interfaces on SPOKE</arg>
+</arguments>
+<msg timestamp="20200813 06:11:41.925" level="TRACE">Arguments: [ 'Verify all MGMT interfaces on SPOKE' ]</msg>
+<msg timestamp="20200813 06:11:41.925" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20200813 06:11:41.925" starttime="20200813 06:11:41.925"></status>
+</kw>
+<kw name="Run Keyword And Continue On Failure" library="BuiltIn">
+<doc>Runs the keyword and continues execution even if a failure occurs.</doc>
+<arguments>
+<arg>Verify Spoke Rules MGMT Interfaces</arg>
+</arguments>
+<msg timestamp="20200813 06:11:41.926" level="TRACE">Arguments: [ 'Verify Spoke Rules MGMT Interfaces' ]</msg>
+<kw name="Verify Spoke Rules Mgmt Interfaces" library="lib.features.routing.VerifyElemIpRuleInfo">
+<msg timestamp="20200813 06:11:41.926" level="TRACE">Arguments: [  ]</msg>
+<msg timestamp="20200813 06:11:46.931" level="FAIL">test failure</msg>
+<msg timestamp="20200813 06:11:46.931" level="DEBUG">Traceback (most recent call last):
+  File "/home/ubuntu/roboframe/lib/features/routing/VerifyElemIpRuleInfo.py", line 28, in verify_spoke_rules_mgmt_interfaces
+    assert False, 'test failure'</msg>
+<status status="FAIL" endtime="20200813 06:11:46.932" starttime="20200813 06:11:41.926"></status>
+</kw>
+<msg timestamp="20200813 06:11:46.932" level="TRACE">Return: None</msg>
+<status status="FAIL" endtime="20200813 06:11:46.932" starttime="20200813 06:11:41.926"></status>
+</kw>
+<tags>
+<tag>intermediate</tag>
+<tag>sanity</tag>
+</tags>
+<status status="FAIL" endtime="20200813 06:11:46.932" critical="yes" starttime="20200813 06:11:41.925">test failure</status>
+</test>
+<doc>Test Demo Script</doc>
+<status status="FAIL" endtime="20200813 06:11:46.933" starttime="20200813 06:11:41.904"></status>
+</suite>
+<kw type="teardown" name="Teardown Suite">
+<msg timestamp="20200813 06:11:46.934" level="TRACE">Arguments: [  ]</msg>
+<kw name="Run Keyword If" library="BuiltIn">
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<arguments>
+<arg>"${duts_list}"!="none"</arg>
+<arg>teardown_testrun_env</arg>
+</arguments>
+<msg timestamp="20200813 06:11:46.935" level="TRACE">Arguments: [ '"none"!="none"' | 'teardown_testrun_env' ]</msg>
+<msg timestamp="20200813 06:11:46.938" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20200813 06:11:46.939" starttime="20200813 06:11:46.935"></status>
+</kw>
+<msg timestamp="20200813 06:11:46.939" level="TRACE">Return: None</msg>
+<status status="PASS" endtime="20200813 06:11:46.939" starttime="20200813 06:11:46.934"></status>
+</kw>
+<doc>Scale test suite</doc>
+<status status="FAIL" endtime="20200813 06:11:46.939" starttime="20200813 06:11:41.874"></status>
+</suite>
+<status status="FAIL" endtime="20200813 06:11:46.948" starttime="20200813 06:11:41.852"></status>
+</suite>
+<statistics>
+<total>
+<stat fail="2" pass="3">Critical Tests</stat>
+<stat fail="2" pass="3">All Tests</stat>
+</total>
+<tag>
+<stat fail="2" pass="3">intermediate</stat>
+<stat fail="2" pass="3">sanity</stat>
+</tag>
+<suite>
+<stat fail="2" id="s1" name="Tests" pass="3">Tests</stat>
+<stat fail="2" id="s1-s1" name="Routing" pass="3">Tests.Routing</stat>
+<stat fail="2" id="s1-s1-s1" name="Route Manager Cli Tests" pass="3">Tests.Routing.Route Manager Cli Tests</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

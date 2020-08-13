@@ -1,0 +1,3 @@
+window.keywords2 = [[0,1,2,0,3,4,0,0,[1,54,1],[],[[55,0,5]]],[0,6,2,0,7,8,0,0,[1,55,0],[],[[55,0,9],[55,0,10]]]];
+window.strings2 = ["*","*Set Log Level","*BuiltIn","*<p>Sets the log threshold to the specified level and returns the old level.\x3c/p>","*TRACE","*Return: b'INFO'","*Run Keyword If","*<p>Runs the given keyword with the given arguments, if <code>condition\x3c/code> is true.\x3c/p>","*\"${duts_list}\"!=\"none\", setup_testrun_env, /home/ubuntu/roboframe/tests/customer_config","*Arguments: [ '\"none\"!=\"none\"' | 'setup_testrun_env' | '/home/ubuntu/roboframe/tests/customer_config' ]","*Return: None"];
+window.fileLoading.notify("3_log-2.js");

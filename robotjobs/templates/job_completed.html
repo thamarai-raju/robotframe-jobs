@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+
+<link rel="stylesheet" href="{% static '/main.css' %}">
+
+<h2>Completed Jobs</h2>
+
+ <label for="test-suite">Click on a testsuite to show testcase data</label>
+
+<div class="row">
+    <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
+        {% for job_id,org_timestamp,display_timestamp,job_name,result in all_jobs_data %}
+            <a class="dropdown-item" href="{% url 'job_view' org_timestamp %} ">
+              {{job_id}}. {{display_timestamp}}<--->{{job_name}}<--->{{result}}</a>
+        {% endfor %}
+    </nav>
+</div>
+
+{% endblock %}
+
