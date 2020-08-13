@@ -30,16 +30,28 @@
     </nav>
 </div>
 <br></br>
-{% if job_testcase_result %}
-<div class="row">
-    <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
-        Test Cases Result:
-        {% for each_job_testcase_result_key, each_job_testcase_result_value in job_testcase_result %}
-        <a class="dropdown-item">
-          {{ each_job_testcase_result_key }}:::::{{ each_job_testcase_result_value }}</a>
-        {% endfor %}
-    </nav>
-</div>
+{% if job_testsuite_error %}
+<h2>Error:</h2>
+    <div class="row">
+    <!-- <div class="col-md-4" style="background-color:#0983ED"> -->
+    <div class="card-body" style="background-color:#698885"> 
+    <h5 class="card-text">{{job_testsuite_error}}</h5>
+    <!-- </div> -->
+    </div>
+    </div>
+{% else %}
+  {% if job_testcase_result %}
+    
+    <div class="row">
+        <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
+            Test Cases Result:
+            {% for each_job_testcase_result_key, each_job_testcase_result_value in job_testcase_result %}
+            <a class="dropdown-item">
+              {{ each_job_testcase_result_key }}:::::{{ each_job_testcase_result_value }}</a>
+            {% endfor %}
+        </nav>
+    </div>
+  {% endif %}
 {% endif %}
 
 

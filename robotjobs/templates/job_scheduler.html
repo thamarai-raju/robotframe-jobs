@@ -12,7 +12,9 @@
     <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
         JOB TYPE
         {% for each_job_group in job_groups %}
-          <a class="dropdown-item" href="{% url 'job_group' each_job_group %}">{{ each_job_group }} </a>
+        <span class="d-inline-block" data-toggle="popover" data-content="Disabled popover">
+          <a class="dropdown-item" href="{% url 'job_group' each_job_group %}" >{{ each_job_group }} </a>
+        </span>
         {% endfor %}
     </nav>
 </div>

@@ -1,5 +1,5 @@
 Testsuite,Testfile,Testcase,Tag
-Routing,Discovered Prefix Convergence,Verify Discovered Prefixes Advertised Time Taken',Sanity|Intermediate|Full
+Routing,Discovered Prefix Convergence,Verify Discovered Prefixes Advertised Time Taken,Sanity|Intermediate|Full
 Routing,Route Manager Cli Tests,Verify Route Cache information on all HUB,Full
 VPN,Vpn Tests,Verify HUB VPN per site,Intermediate|Full
 VPN,Vpn Tests,Verify HUB VPN per interface,Sanity|Full
