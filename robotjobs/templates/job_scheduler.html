@@ -8,7 +8,7 @@
 
 <div class="row justify-content-center"">
     <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
-        JOB TYPE
+        JOB TYPE::
         {% for each_job_group in job_groups %}
         <span class="d-inline-block" data-toggle="popover" data-content="Disabled popover">
           <a class="dropdown-item" href="{% url 'job_group' each_job_group %}" >{{ each_job_group }} </a>
@@ -33,9 +33,12 @@
 <div class="row">
 <div class="col-md secondrow " >
     <nav class="navbar navbar-light small " style="background-color: #E3F2FD;">
-      {{ job_feature_selected }}
     {% for each_job_run_list in job_run_list %}
+    {% if each_job_run_list == job_feature_selected %}
+    <a class="dropdown-item" href="{% url 'job_feature' job_group_selected each_job_run_list %}" style="background-color:#AFC8C4">{{ each_job_run_list }} </a>
+    {% else %}
       <a class="dropdown-item" href="{% url 'job_feature' job_group_selected each_job_run_list %}">{{ each_job_run_list }} </a>
+    {% endif %}
     {% endfor %}
     </nav>
 </div>
@@ -45,9 +48,12 @@
 <br></br>
 <div class="col-md secondrow" style="background-color: #E3F2FD;">
     <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
-    {{ job_testsuite_selected }}
     {% for each_test_suite_list in test_suite_list %}
+    {% if each_test_suite_list == job_testsuite_selected %}
+    <a class="dropdown-item" href="{% url 'job_testsuite' job_group_selected job_feature_selected each_test_suite_list %}"  style="background-color:#AFC8C4">{{ each_test_suite_list }} </a>
+    {% else %}
       <a class="dropdown-item" href="{% url 'job_testsuite' job_group_selected job_feature_selected each_test_suite_list %}">{{ each_test_suite_list }} </a>
+    {% endif %}
     {% endfor %}
 </div>
 </div>

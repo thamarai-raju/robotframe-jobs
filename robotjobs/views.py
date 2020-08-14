@@ -110,14 +110,18 @@ class JobGroup(View):
 			job_testsuite_selected = test_suite_list[0]
 			test_case_list = self.get_model_info.get_testcases_by_testsuite(job_group_selected, job_feature_selected,
 									job_testsuite_selected)
-			# test_case_list = ['1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1',]
+			added_jobs = None
+			job_added_flag = None
 		else:
 			test_suite_list = None
 			test_case_list = None
 			job_feature_selected = None
 			job_testsuite_selected = None
 		
-
+			#Check if any custom jobs were added
+			added_jobs = self.get_model_info.get_custom_added_jobs()
+			job_added_flag = 'true' if added_jobs else None
+				
 		
 		context = {
 		'job_groups': job_group_info_view,
@@ -126,7 +130,9 @@ class JobGroup(View):
 		'job_feature_selected': job_feature_selected,
 		'test_suite_list': test_suite_list,
 		'job_testsuite_selected': job_testsuite_selected,
-		'test_case_list': test_case_list
+		'test_case_list': test_case_list,
+		'added_jobs': added_jobs,
+		'job_added_flag': job_added_flag
 		}
 
 		return render(request, self.template_name, context)
@@ -164,9 +170,14 @@ class JobFeature(View):
 			job_testsuite_selected = test_suite_list[0]
 			test_case_list = self.get_model_info.get_testcases_by_testsuite(job_group_selected, job_feature_selected,
 								job_testsuite_selected)
+			added_jobs = None
+			job_added_flag = None
 		else:
 			job_testsuite_selected = None
 			test_case_list = None
+			#Check if any custom jobs were added
+			added_jobs = self.get_model_info.get_custom_added_jobs()
+			job_added_flag = 'true' if added_jobs else None
 
 		print(test_suite_list)
 
@@ -177,7 +188,9 @@ class JobFeature(View):
 		'job_feature_selected': job_feature_selected,
 		'test_suite_list': test_suite_list,
 		'job_testsuite_selected': job_testsuite_selected,
-		'test_case_list': test_case_list
+		'test_case_list': test_case_list,
+		'added_jobs': added_jobs,
+		'job_added_flag': job_added_flag
 		}
 
 		return render(request, self.template_name, context)
@@ -210,9 +223,14 @@ class JobTestsuite(View):
 		if job_group_selected != 'custom':
 			test_case_list = self.get_model_info.get_testcases_by_testsuite(job_group_selected, job_feature_selected,
 								job_testsuite_selected)
+			added_jobs = None
+			job_added_flag = None
 		else:
 			test_case_list = self.get_model_info.get_testcases_by_testsuite('full', job_feature_selected,
 								job_testsuite_selected)
+			#Check if any custom jobs were added
+			added_jobs = self.get_model_info.get_custom_added_jobs()
+			job_added_flag = 'true' if added_jobs else None
 
 		context = {
 		'job_groups': job_group_info_view,
@@ -221,7 +239,9 @@ class JobTestsuite(View):
 		'job_feature_selected': job_feature_selected,
 		'test_suite_list': test_suite_list,
 		'job_testsuite_selected': job_testsuite_selected,
-		'test_case_list': test_case_list
+		'test_case_list': test_case_list,
+		'added_jobs': added_jobs,
+		'job_added_flag': job_added_flag
 		}
 
 		return render(request, self.template_name, context)
