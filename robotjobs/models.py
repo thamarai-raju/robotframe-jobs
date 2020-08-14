@@ -5,11 +5,22 @@ from django.db import models
 
 # Create your models here.
 class Tag(models.Model):
-    name = models.CharField(max_length=50)
-    def __str__(self):
-        return self.name
+	name = models.CharField(max_length=50)
+	def __str__(self):
+		return self.name
+
 class Testdata(models.Model):
-    testsuite = models.CharField(max_length=100)
-    testfile  = models.CharField(max_length=200)
-    testcase  = models.TextField()
-    tag = models.ManyToManyField('Tag')
+	testsuite = models.CharField(max_length=100)
+	testfile  = models.CharField(max_length=200)
+	testcase  = models.TextField()
+	tag = models.ManyToManyField('Tag')
+
+class Job(models.Model):
+	testsuite = models.CharField(max_length=100)
+	testfile  = models.CharField(max_length=200)
+
+
+class TestCase(models.Model):
+	description = models.CharField(max_length=200)
+	job = models.ForeignKey(Job, null=True, related_name='testcases')
+		

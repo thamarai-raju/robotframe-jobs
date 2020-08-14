@@ -22,11 +22,16 @@
           {% if each_job_testsuite_result_key == job_suite_selected %}
             <a class="dropdown-item" href="{% url 'job_view_suite' org_timestamp each_job_testsuite_result_key %}" style="background-color:#AFC8C4 ;">
               {{ each_job_testsuite_result_key }}<--->{{ each_job_testsuite_result_value }}</a>
-              <a href={{ each_jobsuite_result_link }}>Results</a>
+              {% if each_jobsuite_result_link %}
+                <a href={{ each_jobsuite_result_link }}>Results</a>
+              {% endif %}
+
           {% else %}
             <a class="dropdown-item" href="{% url 'job_view_suite' org_timestamp each_job_testsuite_result_key %}" style="background-color:#E3F2FD ;">
               {{ each_job_testsuite_result_key }}<--->{{ each_job_testsuite_result_value }}</a>
-              <a href={{ each_jobsuite_result_link }}>Results</a>
+              {% if each_jobsuite_result_link %}
+                <a href={{ each_jobsuite_result_link }}>Results</a>
+              {% endif %}
           {% endif %}
         {% endfor %}
     </nav>

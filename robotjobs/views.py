@@ -36,6 +36,18 @@ class GetModelInfo():
 		 				filter(tag__name=group_name).filter(testsuite=feature_name).
 		 				filter(testfile=testsuite_name)]))
 
+	def get_custom_job_info(self):
+		job_testsuite_list = [z for x,y,z in Job.objects.all().values_list()]
+		custom_data_d = {}
+		for each_job_testsuite in job_testsuite_list:
+			test_cases = [y for x,y,z in 
+				Job.objects.filter(testfile=each_job_testsuite).first().testcases.values_list()]
+			custom_data_d[each_job_testsuite] = test_cases
+		return custom_data_d
+
+	def get_custom_added_jobs(self):
+		return [(y,z) for x,y,z in Job.objects.all().values_list()]
+
 class JobScheduler(View):
 	template_name = 'job_scheduler.html'
 	robot_data = GetRobotService().get_robot_service()
@@ -43,10 +55,11 @@ class JobScheduler(View):
 	def get(self, request, *args, **kwargs):
 
 
-		#only when a update is needed
+		#get git update when model is not populated
 		load_testdata_to_db()
 		# letswaitalot.delay(5)
 		# print('escape')
+
 
 		#add the full and custom to the above
 		job_group_info_view = ['sanity','intermediate','full','custom']
@@ -97,6 +110,7 @@ class JobGroup(View):
 			job_testsuite_selected = test_suite_list[0]
 			test_case_list = self.get_model_info.get_testcases_by_testsuite(job_group_selected, job_feature_selected,
 									job_testsuite_selected)
+			# test_case_list = ['1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1','1',]
 		else:
 			test_suite_list = None
 			test_case_list = None
@@ -225,48 +239,101 @@ class JobRobotRun(View):
 
 class JobRobotAdd(View):
 	template_name = 'job_scheduler.html'
-	def get(self, request, job_group_selected=None, *args, **kwargs):
+	get_model_info = GetModelInfo()
+
+	def get(self, request, job_group_selected=None,  job_feature_selected=None, job_testsuite_selected=None, *args, **kwargs):
 		return render(request, self.template_name, {})
 
-	def post(self, request, *args, **kwargs):
-		return render(request, self.template_name, {})		
+	def post(self, request, job_group_selected=None, job_feature_selected=None, job_testsuite_selected=None, *args, **kwargs):
+		
+		#print(request.POST.getlist('testcase'))
+		# print(job_group_selected)
+		# print(job_feature_selected)
+		# print(job_testsuite_selected)
 
+		testcases = request.POST.getlist('testcase')
+
+		job = Job(testsuite=job_feature_selected, testfile=job_testsuite_selected)
+		job.save()
+		for testcase in testcases:
+			TestCase.objects.create(description=testcase, job=job)
+
+
+		added_jobs = self.get_model_info.get_custom_added_jobs()
+		
+		#add the full and custom to the above
+		job_group_info_view = ['sanity','intermediate','full','custom']
+		
+		#get the list of suite names in the group
+		job_run_list = self.get_model_info.get_feature_by_tag('full')
+		test_suite_list = self.get_model_info.get_testsuites_by_feature('full', job_feature_selected)
+		test_case_list = self.get_model_info.get_testcases_by_testsuite('full', job_feature_selected,
+								job_testsuite_selected)
+
+		context = {
+		'job_groups': job_group_info_view,
+		'job_group_selected': job_group_selected,
+		'job_run_list': job_run_list,
+		'job_feature_selected': job_feature_selected,
+		'test_suite_list': test_suite_list,
+		'job_testsuite_selected': job_testsuite_selected,
+		'test_case_list': test_case_list,
+		'added_jobs': added_jobs,
+		'job_added_flag': 'true'
+		}
+
+
+		return render(request, self.template_name, context)		
+	
+class JobRobotCustomRun(View):
+		
+	def get(self, request, job_group_selected=None, *args, **kwargs):
+		return JobView().get(request, job_custom_run=True)	
+
+	def post(self, request, *args, **kwargs):
+		return render(request, self.template_name, {})	
+
+"""
+class Job(models.Model):
+	testsuite = models.CharField(max_length=100)
+    testfile  = models.CharField(max_length=200)
+"""
 
 class JobView(View):
 	template_name = 'job_view.html'
 	robot_service_data = GetRobotService()
 	robot_data = robot_service_data.get_robot_service()
-	
 	get_model_info = GetModelInfo()
 
-	def get(self, request, job_group_selected=None, time_stamp=None, *args, **kwargs):
+	def get(self, request, job_group_selected=None, time_stamp=None, job_custom_run=None, *args, **kwargs):
 
 		if job_group_selected:
-			input_job_d = [
-				{
-					'testsuite_id':'1',
-					'suite_name':'vpn_tests',
-					# 'include_tags':[],
-					'include_tags':['test1'],
-					# 'exclude_tags':['test1','test2','test3','test4'],
-					# 'exclude_tags':[],
-					# 'testcases':['Verify SPOKE ANYNET per site'],
-				},
-				{
-					'testsuite_id':'2',
-					'suite_name':'route_manager_cli_tests',
-					'include_tags':['sanity'],
-					# 'exclude_tags':['sanity'],
-					'testcases':[],
-				},
-				# {
-				# 	'testsuite_id':'3',
-				# 	'suite_name':'colgate',
-				# 	'include_tags':[],
-				# 	'exclude_tags':[],
-				# 	'testcases':['Changes for colgate customer config'],
-				# }
-			]
+			# input_job_d = [
+			# 	{
+			# 		'testsuite_id':'1',
+			# 		'suite_name':'vpn_tests',
+			# 		# 'include_tags':[],
+			# 		'include_tags':['test1'],
+			# 		# 'exclude_tags':['test1','test2','test3','test4'],
+			# 		# 'exclude_tags':[],
+			# 		# 'testcases':['Verify SPOKE ANYNET per site'],
+			# 	},
+			# 	{
+			# 		'testsuite_id':'2',
+			# 		'suite_name':'route_manager_cli_tests',
+			# 		'include_tags':['sanity'],
+			# 		# 'exclude_tags':['sanity'],
+			# 		'testcases':[],
+			# 	},
+			# 	# {
+			# 	# 	'testsuite_id':'3',
+			# 	# 	'suite_name':'colgate',
+			# 	# 	'include_tags':[],
+			# 	# 	'exclude_tags':[],
+			# 	# 	'testcases':['Changes for colgate customer config'],
+			# 	# }
+			# ]
+
 			job_testsuite_list = self.get_model_info.get_testsuite_by_tag(job_group_selected)
 			input_job_d = []
 			count =1
@@ -280,6 +347,8 @@ class JobView(View):
 				count += 1
 				input_job_d.append(each_input_job_d)
 
+			print(input_job_d)
+
 			# @task(name="justsleeps")
 			# def temp1():
 			# 	time.sleep(10)
@@ -288,6 +357,31 @@ class JobView(View):
 		
 			# download_thread = threading.Thread(target=self.robot_data.run_jobs, args=input_job_d)
 			# download_thread.start()
+		elif job_custom_run:
+			
+			job_testsuite_d = self.get_model_info.get_custom_job_info()
+			input_job_d = []
+			count =1
+			for each_job_testsuite,each_job_testcases in job_testsuite_d.iteritems():
+				each_input_job_d = {
+						'testsuite_id': str(count),
+						'suite_name': each_job_testsuite,
+						'testcases': each_job_testcases
+					}
+				count += 1
+				input_job_d.append(each_input_job_d)
+
+			print(input_job_d)
+
+			run_jobs.delay(input_job_d)
+
+			Job.objects.all().delete()
+			TestCase.objects.all().delete()
+
+		# return render(request, self.template_name, {})
+
+			
+
 
 		job_result_data_service = self.robot_data.get_status(time_stamp)
 		#get suite name
@@ -308,11 +402,13 @@ class JobView(View):
 				if testsuite_status == 'RUNNING' or \
 						testsuite_status == 'YET TO START':
 					job_testsuite_result.append((testsuite_name,testsuite_status,testsuite_result_link))
+				elif 'ERROR' in testsuite_status:
+					job_testsuite_result.append((testsuite_name,'Error', None))
 				else:
 					job_testsuite_result.append((testsuite_name,
 						each_job_result_data.get('testsuite_result'),testsuite_result_link))
 			else:
-				job_testsuite_result.append((testsuite_name,'Error'))
+				job_testsuite_result.append((testsuite_name,'Error', None))
 			if testcases_list:
 				for each_testcase_name in testcases_list:
 						result_each_id.append(each_testcase_name['testcase_result'])
@@ -374,6 +470,8 @@ class JobViewSuite(View):
 				if testsuite_status == 'RUNNING' or \
 						testsuite_status == 'YET TO START':
 					job_testsuite_result.append((testsuite_name,testsuite_status,testsuite_result_link))
+				elif 'ERROR' in testsuite_status:
+					job_testsuite_result.append((testsuite_name,'Error', None))
 				else:
 					job_testsuite_result.append((testsuite_name,
 						each_job_result_data.get('testsuite_result'),testsuite_result_link))
@@ -381,7 +479,7 @@ class JobViewSuite(View):
 					for each_testcase_name in testcases_list:
 						job_testcase_result.append((each_testcase_name['name'], each_testcase_name['testcase_result']))
 			else:
-				job_testsuite_result.append((testsuite_name,'Error'))
+				job_testsuite_result.append((testsuite_name,'Error',None))
 				if testsuite_name == job_suite_selected:
 					job_testsuite_error = testsuite_error
 

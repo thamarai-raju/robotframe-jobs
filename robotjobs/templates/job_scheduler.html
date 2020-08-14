@@ -19,14 +19,16 @@
  
 <br></br>
 <div class="row">
+{% if job_group_selected %}
 {% if job_group_selected != 'custom'%}
        <h3 style="padding-left: 15px; padding-right: 10px;">Job List</h3>
-      {% else%}
+{% else%}
         <h3 style="padding-left: 10px; padding-right: 10px;">Feature List </h3> 
-      {% endif %}
+{% endif %}
       <br></br>
       <h3 style="padding-left: 445px; padding-right: 50px;">Test Suite List</h3>
 </div>
+
 
 <div class="row">
 <div class="col-md secondrow " >
@@ -50,21 +52,12 @@
 </div>
 </div>
 
-<br></br>
+{% endif %}
 
-<div class="row">
-    <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
-    Test Case List<br>
-    {% for each_test_case_list in test_case_list %}
-        <a class="dropdown-item">{{ each_test_case_list }} </a>
-    {% endfor %}
-</div>
 <br></br>
-
-<<<<<<< HEAD
 {% if job_testsuite_selected %}
 {%  if job_group_selected != 'custom' %}
-  <div class="row">
+  <div class="col-md" >
       <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
       Test Case List<br>
   		{% for each_test_case_list in test_case_list %}
@@ -72,8 +65,13 @@
   		{% endfor %}
   </div>
 {% else %}
+
+
+
   <div class="row">
-  <select class="navbar navbar-light small" multiple>
+  <form name="Add Job" method="post" action="{% url 'job_robot_add' job_group_selected job_feature_selected job_testsuite_selected%}">
+  {% csrf_token %}
+  <select class="navbar navbar-light small" multiple="multiple" name='testcase' id='testcase'>
   {% for each_test_case_list in test_case_list %}
   <option>{{ each_test_case_list }}</option>
   {% endfor %}
@@ -83,19 +81,31 @@
 {% endif %}
 <br></br>
 
-=======
->>>>>>> off-css
 {% if job_group_selected != 'custom' and job_testsuite_selected %}
   <a href="{% url 'job_robot_run' job_group_selected %}"
                  class="btn btn-primary">
     Run Job
   {% elif job_group_selected %}
-  <a href="{% url 'job_robot_add' job_group_selected job_feature_selected job_feature_selected job_feature_selected %}"
-                 class="btn btn-primary">  
-    Add Job
+    
+    <input type="hidden" name="Add Job" />
+    <input type="submit" value="Add Job" /> 
+    </form>
+
   {% endif %}
   </a>
 
+{% if job_added_flag %}
+  <div class="col-md" >
+      <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
+      Test Case List<br>
+      {% for feature_name, testsuite_name in added_jobs %}
+          <a class="dropdown-item">{{ feature_name }}<--->{{testsuite_name}}</a>
+      {% endfor %}
+  </div>
+  <a href="{% url 'job_robot_custom_run' %}"
+                 class="btn btn-primary">
+    Run Job
+{% endif %}
 
 
 {% endblock %}
