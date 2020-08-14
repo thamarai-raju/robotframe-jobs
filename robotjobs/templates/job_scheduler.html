@@ -20,13 +20,23 @@
         </span>
         {% endfor %}
     </nav>
+
+    <div class="dropdown "style="padding-left: 100px; padding-right: 50px;">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Refresh Git
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">master</a>
+        <a class="dropdown-item" href="#">feature</a>
+      </div>
+    </div>
 </div>
- 
+<br></br>
 <br></br>
 <div class="row">
 {% if job_group_selected %}
 {% if job_group_selected != 'custom'%}
-       <h3 style="padding-left: 15px; padding-right: 10px;">Job List</h3>
+       <h3 style="padding-left: 10px; padding-right: 10px;">Job List</h3>
 {% else%}
         <h3 style="padding-left: 10px; padding-right: 10px;">Feature List </h3> 
 {% endif %}
@@ -36,7 +46,7 @@
 
 
 <div class="row">
-<div class="col-md secondrow " >
+<div class="col-md secondrow " style="background-color: #E3F2FD;" >
     <nav class="navbar navbar-light small " style="background-color: #E3F2FD;">
     {% for each_job_run_list in job_run_list %}
     {% if each_job_run_list == job_feature_selected %}
@@ -66,10 +76,9 @@
 {% endif %}
 
 <br></br>
-{% if job_testsuite_selected %}
 {%  if job_group_selected != 'custom' %}
-  <div class="col-md secondrow" >
-    <h3>Test Case List</h3>
+  <h3>Test Case List</h3>
+  <div class="thirdrow" style="background-color: #E3F2FD;">
       <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
   		{% for each_test_case_list in test_case_list %}
   		    <a class="dropdown-item">{{ each_test_case_list }} </a>
@@ -78,19 +87,18 @@
 {% else %}
 
 
-
-  <div class="row">
+<h3>Test Case List</h3>
+  <div class="style="background-color: #E3F2FD;"">
   <form name="Add Job" method="post" action="{% url 'job_robot_add' job_group_selected job_feature_selected job_testsuite_selected%}">
   {% csrf_token %}
 
-  <h3>Test Case List</h3>
+  
   <select class="navbar navbar-light small thirdrow " multiple="multiple" name='testcase' id='testcase' style="background-color: #E3F2FD;">
   {% for each_test_case_list in test_case_list %}
   <option style="color: #212529; padding: .25rem 1.5rem;">{{ each_test_case_list }}</option>
   {% endfor %}
   </select>
   </div>
-{% endif %}
 {% endif %}
 <br></br>
 
@@ -109,7 +117,7 @@
   </a>
 
 {% if job_added_flag %}
-  <div class="col-md" >
+  <div class="col-md " style="background-color: #E3F2FD;">
     <h3>Test Case List</h3>
       <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
       {% for feature_name, testsuite_name in added_jobs %}

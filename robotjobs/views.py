@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.views import View
 from celery.decorators import task
-from lib.django.robot_execute import *
+#from lib.django.robot_execute import *
 
 from .management.commands.load_test_data_to_db import load_testdata_to_db
 from .models import *
@@ -16,7 +16,8 @@ import re
 class GetRobotService():
 
 	def get_robot_service(self):
-		return RobotExecute()
+		return None
+#		return RobotExecute()
 
 
 class GetModelInfo():
