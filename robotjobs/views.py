@@ -13,108 +13,6 @@ import time
 import re
 
 
-
-from robot import run as robot_run_custom
-import re
-import os
-import sys
-from pprint import pprint
-import pdb
-import glob
-import socket
-from datetime import datetime
-import json
-from celery.decorators import task
-import time
-
-@task(name="justsleeps")
-def letswaitalot(t):
-    time.sleep(t)
-    print("yoooooo")
-    with open('myfile.txt', 'w') as fp:
-        pass
-
-
-@task(name="views.run_jobs")
-def run_jobs(input_job_d):
-	'''
-	'''
-	time.sleep(10)
-	# robot_suites_path = '/home/ubuntu/roboframe/tests'
-	# django_log_path = '/home/ubuntu/roboframe/tests/django_logs/'
-
-	# log_folder_name = django_log_path+'robot_log_files'
-	# jobs_list_file =  'jobs_list'
-	# apache_robot_folder = 'roboframe'
-	# jobs_list_file_path = log_folder_name +'/'+ jobs_list_file
-
-
-	# print('INSIDE FUNCTION')
-	# print(robot_suites_path)
-
-	# # #delete all existing log files
-	# # log_fileList = glob.glob(self.log_folder_name+'/*')
-	# # # Iterate over the list of filepaths & remove each file.
-	# # for each_file in log_fileList:
-	# #     try:
-	# #         os.remove(each_file)
-	# #     except:
-	# #         print("Error while deleting file : ", each_file)
-
-	# #creating a timestamp folder for this run
-	# timestamp = re.sub('[:]', '-', re.sub('[ ]', '_', str(datetime.now())))
-	# current_log_folder_name = log_folder_name +'/'+ timestamp
-	# os.mkdir(current_log_folder_name)
-
-
-	# #add the current run to the list of executed jobs 
-	# if os.path.exists(jobs_list_file_path):
-	# 	with open(jobs_list_file_path) as jobs_list_file_io: 
-	# 		jobs_list_data = json.load(jobs_list_file_io)
-	# else:
-	# 	jobs_list_data = []
-
-	# jobs_list_data.append({
-	# 		'testsuite_id_l' : [x.get('testsuite_id') for x in input_job_d],
-	# 		'timestamp' : timestamp,
-	# 		'suite_names' : [x.get('suite_name') for x in input_job_d],
-	# 	})
-	# with open(jobs_list_file_path, 'w') as jobs_list_file_io:
-	# 		json.dump(jobs_list_data, jobs_list_file_io)
-
-
-	# #run the robot script
-	# for each_input_job in input_job_d:
-
-	# 	id = each_input_job.get('testsuite_id')
-	# 	suite_name = each_input_job.get('suite_name')
-	# 	testcases = each_input_job.get('testcases',[])
-	# 	include_tags = each_input_job.get('include_tags',[])
-	# 	exclude_tags = each_input_job.get('exclude_tags',[])
-	# 	status_file = current_log_folder_name+'/'+id+'_status.txt'
-	# 	console_log_file = current_log_folder_name+'/'+id+'_console_log.txt'
-	# 	console_err_file = current_log_folder_name+'/'+id+'_console_err.txt'
-
-	# 	with open(status_file, 'w+') as statusFile:
-	# 		statusFile.write('RUNNING')
-	# 	try:
-	# 		logFile = open(console_log_file, 'w+')
-	# 		logErrFile = open(console_err_file, 'w+')
-	# 		log = robot_run_custom.run(robot_suites_path, stdout=logFile,stderr=logErrFile, suite=suite_name, test=testcases,
-	# 			include=include_tags, exclude=exclude_tags,
-	# 			variable=['testbed_name:scale/scale','scale_tb_num:1', 'duts_list:none'],splitlog=True,
-	# 			log=id+'_log.html', report=id+'_report.html', output=id+'_output.xml', outputdir=current_log_folder_name)
-	# 		logErrFile.close()
-	# 		logFile.close()
-	# 	except Exception as e:
-	# 		print(e)
-	# 		with open(status_file, 'w+') as statusFile:
-	# 			statusFile.write('ERROR')
-	# 	with open(status_file, 'w+') as statusFile:
-	# 		statusFile.write('COMPLETED')
-		
-
-
 class GetRobotService():
 
 	def get_robot_service(self):
@@ -356,8 +254,8 @@ class JobView(View):
 
 			
 			print('STARTED')
-			print(input_job_d)
-			# run_jobs.delay(input_job_d)
+			# print(input_job_d)
+			run_jobs.delay(input_job_d)
 
 			# run_jobs(input_job_d)
 			
