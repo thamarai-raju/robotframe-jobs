@@ -15,3 +15,7 @@ navbar.navbar-expand-lg.navbar-light.bg-dark{
 .table {
     margin: 0px;
 }
+
+.flexwrap {
+	flex-wrap: block !important;
+}

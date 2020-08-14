@@ -57,6 +57,7 @@
 {% endif %}
 
 {% if job_testsuite_selected %}
+{%  if job_group_selected != 'custom' %}
   <div class="row">
       <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
       Test Case List<br>
@@ -64,16 +65,29 @@
   		    <a class="dropdown-item">{{ each_test_case_list }} </a>
   		{% endfor %}
   </div>
-  <br></br>
+{% else %}
+  <div class="row">
+  <select class="navbar navbar-light small" multiple>
+  {% for each_test_case_list in test_case_list %}
+  <option>{{ each_test_case_list }}</option>
+  {% endfor %}
+  </select>
+  </div>
 {% endif %}
+{% endif %}
+<br></br>
+
 {% if job_group_selected != 'custom' and job_testsuite_selected %}
   <a href="{% url 'job_robot_run' job_group_selected %}"
-                   class="btn btn-primary">
-      {% else %}
-        Add Job
-      {% endif %}
-        Run Job
+                 class="btn btn-primary">
+    Run Job
+  {% elif job_group_selected %}
+  <a href="{% url 'job_robot_add' job_group_selected job_feature_selected job_feature_selected job_feature_selected %}"
+                 class="btn btn-primary">  
+    Add Job
+  {% endif %}
   </a>
+
 
 
 {% endblock %}
