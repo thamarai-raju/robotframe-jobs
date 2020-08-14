@@ -7,11 +7,16 @@
 <br></br> 
 
 <div class="row justify-content-center"">
-    <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
-        JOB TYPE::
+    <nav class="navbar navbar-light small" style="background-color: #698885;">
+        <h6>JOB TYPE&nbsp&nbsp</h6>
+
         {% for each_job_group in job_groups %}
         <span class="d-inline-block" data-toggle="popover" data-content="Disabled popover">
-          <a class="dropdown-item" href="{% url 'job_group' each_job_group %}" >{{ each_job_group }} </a>
+          {% if each_job_group == job_group_selected %}
+            <a class="dropdown-item" href="{% url 'job_group' each_job_group %}" style="background-color: #AFC8C4;">{{ each_job_group }} </a>
+          {% else %}
+            <a class="dropdown-item" href="{% url 'job_group' each_job_group %}" style="background-color: #E3F2FD;">{{ each_job_group }} </a>
+          {% endif %}
         </span>
         {% endfor %}
     </nav>
@@ -63,7 +68,7 @@
 <br></br>
 {% if job_testsuite_selected %}
 {%  if job_group_selected != 'custom' %}
-  <div class="col-md" >
+  <div class="col-md secondrow" >
       <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
       Test Case List<br>
   		{% for each_test_case_list in test_case_list %}

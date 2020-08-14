@@ -6,13 +6,13 @@
 
 <h2>Completed Jobs</h2>
 
- <label for="test-suite">Click on a testsuite to show testcase data</label>
+ <label for="test-suite">Click on a testsuite to show detailed data</label>
 
-<div class="row">
+<div class="col-md secondrow">
     <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
         {% for job_id,org_timestamp,display_timestamp,job_name,result in all_jobs_data %}
             <a class="dropdown-item" href="{% url 'job_view' org_timestamp %} ">
-              {{job_id}}. {{display_timestamp}}<--->{{job_name}}<--->{{result}}</a>
+              {{job_id}}. {{display_timestamp}}<--->{{job_name|slice:"0:100"}}<--->{{result}}</a>
         {% endfor %}
     </nav>
 </div>

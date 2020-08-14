@@ -8,8 +8,8 @@
 <div class="row">
 <!-- <div class="col-md-4" style="background-color:#0983ED"> -->
 <div class="card-body" style="background-color:#698885"> 
-<h5 class="card-title">JOB STATUS: {{full_job_status}}</h5>
-<h5 class="card-text">{{display_timestamp}}<--->{{job_name}}</h5>
+<h5 class="card-title">Job Status: {{full_job_status}}</h5>
+<h7 class="card-text">{{display_timestamp}}<--->{{job_name}}</h7>
 <!-- </div> -->
 </div>
 </div>
@@ -51,7 +51,7 @@
     
     <div class="row">
         <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
-            Test Cases Result:
+            Test Case Result:
             {% for each_job_testcase_result_key, each_job_testcase_result_value in job_testcase_result %}
             <a class="dropdown-item">
               {{ each_job_testcase_result_key }}<--->{{ each_job_testcase_result_value }}</a>
