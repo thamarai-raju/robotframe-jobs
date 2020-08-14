@@ -77,9 +77,10 @@
   <div class="row">
   <form name="Add Job" method="post" action="{% url 'job_robot_add' job_group_selected job_feature_selected job_testsuite_selected%}">
   {% csrf_token %}
-  <select class="navbar navbar-light small" multiple="multiple" name='testcase' id='testcase'>
+  <h3>Test Case List</h3>
+  <select class="navbar navbar-light small thirdrow " multiple="multiple" name='testcase' id='testcase' style="background-color: #E3F2FD;">
   {% for each_test_case_list in test_case_list %}
-  <option>{{ each_test_case_list }}</option>
+  <option style="color: #212529; padding: .25rem 1.5rem;">{{ each_test_case_list }}</option>
   {% endfor %}
   </select>
   </div>
@@ -94,7 +95,8 @@
   {% elif job_group_selected %}
     
     <input type="hidden" name="Add Job" />
-    <input type="submit" value="Add Job" /> 
+    <!--<button type="submit" value="Add Job" /> !-->
+    <button type="submit" class="btn btn-success">Add Job</button>
     </form>
 
   {% endif %}

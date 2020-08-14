@@ -26,6 +26,19 @@ navbar.navbar-expand-lg.navbar-light.bg-dark{
     padding-left: 15px;
 }
 
+.thirdrow {
+    overflow: scroll;
+    bottom: 0;
+    right: 0;
+    height: 250px;
+    width: 1150px;
+    padding-right: 30px;
+    padding-left: 15px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    outline: none;
+    border: none;
+}
+
 .content {
     overflow-y: auto;
 }

@@ -2,8 +2,8 @@ import sys
 import os
 import shutil
 from robotjobs.models import Testdata, Tag
-from lib.django.robot_testdata import RobotTestData
-from git import Repo
+#from lib.django.robot_testdata import RobotTestData
+#from git import Repo
 
 def clone_repo(path):
     sys.path.append(path) 
