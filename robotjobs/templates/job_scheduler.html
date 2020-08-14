@@ -2,13 +2,11 @@
 {% load static %}
 {% block page_content %}
 
-<link rel="stylesheet" href="{% static '/main.css' %}">
+<link rel="stylesheet" href="{% static '/main.scss' %}">
 
-<h2>Job Scheduler</h2>
- <label for="test-suite">Select one job group</label>
+<br></br> 
 
-
-<div class="row">
+<div class="row justify-content-center"">
     <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
         JOB TYPE
         {% for each_job_group in job_groups %}
@@ -18,54 +16,51 @@
         {% endfor %}
     </nav>
 </div>
+ 
 <br></br>
-{% if job_group_selected%}
-  {% if job_group_selected != 'custom'%}
-    <div class="row">
-        <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
-          Job List<br>  
-          {{ job_feature_selected }}
-        {% for each_job_run_list in job_run_list %}
-          <a class="dropdown-item" href="{% url 'job_feature' job_group_selected each_job_run_list %}">{{ each_job_run_list }} </a>
-        {% endfor %}
-        </nav>
-    </div>
-  {% else%}
-    <div class="row">
-        <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
-          Feature List<br>  
-          {{ job_feature_selected }}
-        {% for each_job_run_list in job_run_list %}
-          <a class="dropdown-item" href="{% url 'job_feature' job_group_selected each_job_run_list %}">{{ each_job_run_list }} </a>
-        {% endfor %}
-        </nav>
-    </div>
-  {% endif %}
-{% endif %}
+<div class="row">
+{% if job_group_selected != 'custom'%}
+       <h3 style="padding-left: 15px; padding-right: 10px;">Job List</h3>
+      {% else%}
+        <h3 style="padding-left: 10px; padding-right: 10px;">Feature List </h3> 
+      {% endif %}
+      <br></br>
+      <h3 style="padding-left: 445px; padding-right: 50px;">Test Suite List</h3>
+</div>
+
+<div class="row">
+<div class="col-md secondrow " >
+    <nav class="navbar navbar-light small " style="background-color: #E3F2FD;">
+      {{ job_feature_selected }}
+    {% for each_job_run_list in job_run_list %}
+      <a class="dropdown-item" href="{% url 'job_feature' job_group_selected each_job_run_list %}">{{ each_job_run_list }} </a>
+    {% endfor %}
+    </nav>
+</div>
+
+
 
 <br></br>
-{% if job_feature_selected %}
-  <div class="row">
-      <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
-      Test Suite List<br>
-      {{ job_testsuite_selected }}
-      {% for each_test_suite_list in test_suite_list %}
-        <a class="dropdown-item" href="{% url 'job_testsuite' job_group_selected job_feature_selected each_test_suite_list %}">{{ each_test_suite_list }} </a>
-      {% endfor %}
-  </div>
-  <br></br>
-{% endif %}
+<div class="col-md secondrow" style="background-color: #E3F2FD;">
+    <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
+    {{ job_testsuite_selected }}
+    {% for each_test_suite_list in test_suite_list %}
+      <a class="dropdown-item" href="{% url 'job_testsuite' job_group_selected job_feature_selected each_test_suite_list %}">{{ each_test_suite_list }} </a>
+    {% endfor %}
+</div>
+</div>
 
-{% if job_testsuite_selected %}
-  <div class="row">
-      <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
-      Test Case List<br>
-  		{% for each_test_case_list in test_case_list %}
-  		    <a class="dropdown-item">{{ each_test_case_list }} </a>
-  		{% endfor %}
-  </div>
-  <br></br>
-{% endif %}
+<br></br>
+
+<div class="row">
+    <nav class="navbar navbar-light small" style="background-color: #E3F2FD;">
+    Test Case List<br>
+    {% for each_test_case_list in test_case_list %}
+        <a class="dropdown-item">{{ each_test_case_list }} </a>
+    {% endfor %}
+</div>
+<br></br>
+
 {% if job_group_selected != 'custom' and job_testsuite_selected %}
   <a href="{% url 'job_robot_run' job_group_selected %}"
                    class="btn btn-primary">

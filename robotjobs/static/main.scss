@@ -15,3 +15,17 @@ navbar.navbar-expand-lg.navbar-light.bg-dark{
 .table {
     margin: 0px;
 }
+
+.secondrow {
+    overflow: scroll;
+    bottom: 0;
+    right: 0;
+    height: 250px;
+    width: 500px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.content {
+    overflow-y: auto;
+}
