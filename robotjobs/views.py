@@ -319,7 +319,7 @@ class JobView(View):
 		return render(request, self.template_name, {})		
 
 
-
+# PUSH
 class JobViewSuite(View):
 	template_name = 'job_view.html'
 	robot_data = GetRobotService().get_robot_service()
