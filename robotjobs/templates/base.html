@@ -11,6 +11,7 @@
         
         <div>
 		    {% if user.is_authenticated %}
+                <h10 style='font-size: 12'> Welcome {{request.user}} </h10>
 		        <a class="navbar-brand" href="{% url 'logout' %}">Logout</a>
 		    {% else %}
 		        <a class="navbar-brand" href="{% url 'login' %}">Login</a>
