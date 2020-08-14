@@ -3,13 +3,116 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from django.views import View
-from lib.django.robot_execute import RobotExecute
+from lib.django.robot_execute import *
 from celery.decorators import task
 
+from robot_model_write import load_testdata_to_db
 from .models import *
 import threading
 import time
 import re
+
+
+
+from robot import run as robot_run_custom
+import re
+import os
+import sys
+from pprint import pprint
+import pdb
+import glob
+import socket
+from datetime import datetime
+import json
+from celery.decorators import task
+import time
+
+@task(name="justsleeps")
+def letswaitalot(t):
+    time.sleep(t)
+    print("yoooooo")
+    with open('myfile.txt', 'w') as fp:
+        pass
+
+
+@task(name="views.run_jobs")
+def run_jobs(input_job_d):
+	'''
+	'''
+	time.sleep(10)
+	# robot_suites_path = '/home/ubuntu/roboframe/tests'
+	# django_log_path = '/home/ubuntu/roboframe/tests/django_logs/'
+
+	# log_folder_name = django_log_path+'robot_log_files'
+	# jobs_list_file =  'jobs_list'
+	# apache_robot_folder = 'roboframe'
+	# jobs_list_file_path = log_folder_name +'/'+ jobs_list_file
+
+
+	# print('INSIDE FUNCTION')
+	# print(robot_suites_path)
+
+	# # #delete all existing log files
+	# # log_fileList = glob.glob(self.log_folder_name+'/*')
+	# # # Iterate over the list of filepaths & remove each file.
+	# # for each_file in log_fileList:
+	# #     try:
+	# #         os.remove(each_file)
+	# #     except:
+	# #         print("Error while deleting file : ", each_file)
+
+	# #creating a timestamp folder for this run
+	# timestamp = re.sub('[:]', '-', re.sub('[ ]', '_', str(datetime.now())))
+	# current_log_folder_name = log_folder_name +'/'+ timestamp
+	# os.mkdir(current_log_folder_name)
+
+
+	# #add the current run to the list of executed jobs 
+	# if os.path.exists(jobs_list_file_path):
+	# 	with open(jobs_list_file_path) as jobs_list_file_io: 
+	# 		jobs_list_data = json.load(jobs_list_file_io)
+	# else:
+	# 	jobs_list_data = []
+
+	# jobs_list_data.append({
+	# 		'testsuite_id_l' : [x.get('testsuite_id') for x in input_job_d],
+	# 		'timestamp' : timestamp,
+	# 		'suite_names' : [x.get('suite_name') for x in input_job_d],
+	# 	})
+	# with open(jobs_list_file_path, 'w') as jobs_list_file_io:
+	# 		json.dump(jobs_list_data, jobs_list_file_io)
+
+
+	# #run the robot script
+	# for each_input_job in input_job_d:
+
+	# 	id = each_input_job.get('testsuite_id')
+	# 	suite_name = each_input_job.get('suite_name')
+	# 	testcases = each_input_job.get('testcases',[])
+	# 	include_tags = each_input_job.get('include_tags',[])
+	# 	exclude_tags = each_input_job.get('exclude_tags',[])
+	# 	status_file = current_log_folder_name+'/'+id+'_status.txt'
+	# 	console_log_file = current_log_folder_name+'/'+id+'_console_log.txt'
+	# 	console_err_file = current_log_folder_name+'/'+id+'_console_err.txt'
+
+	# 	with open(status_file, 'w+') as statusFile:
+	# 		statusFile.write('RUNNING')
+	# 	try:
+	# 		logFile = open(console_log_file, 'w+')
+	# 		logErrFile = open(console_err_file, 'w+')
+	# 		log = robot_run_custom.run(robot_suites_path, stdout=logFile,stderr=logErrFile, suite=suite_name, test=testcases,
+	# 			include=include_tags, exclude=exclude_tags,
+	# 			variable=['testbed_name:scale/scale','scale_tb_num:1', 'duts_list:none'],splitlog=True,
+	# 			log=id+'_log.html', report=id+'_report.html', output=id+'_output.xml', outputdir=current_log_folder_name)
+	# 		logErrFile.close()
+	# 		logFile.close()
+	# 	except Exception as e:
+	# 		print(e)
+	# 		with open(status_file, 'w+') as statusFile:
+	# 			statusFile.write('ERROR')
+	# 	with open(status_file, 'w+') as statusFile:
+	# 		statusFile.write('COMPLETED')
+		
 
 
 class GetRobotService():
@@ -17,9 +120,11 @@ class GetRobotService():
 	def get_robot_service(self):
 		return RobotExecute()
 
+
 class GetModelInfo():
 
 	def get_feature_by_tag(self, group_name):
+		print(group_name)
 		return list(set([x.testsuite for x in Testdata.objects.filter(tag__name=group_name)]))
 
 	def get_testsuites_by_feature(self, group_name, feature_name):
@@ -34,13 +139,17 @@ class GetModelInfo():
 		 				filter(tag__name=group_name).filter(testsuite=feature_name).
 		 				filter(testfile=testsuite_name)]))
 
-
-
 class JobScheduler(View):
 	template_name = 'job_scheduler.html'
 	robot_data = GetRobotService().get_robot_service()
 
 	def get(self, request, *args, **kwargs):
+
+
+		#only when a update is needed
+		# load_testdata_to_db()
+		letswaitalot.delay(5)
+		print('escape')
 
 		#add the full and custom to the above
 		job_group_info_view = ['Sanity','Intermediate','Full','Custom']
@@ -80,6 +189,9 @@ class JobGroup(View):
 		
 		#get the list of suite names in the group
 		job_run_list = self.get_model_info.get_feature_by_tag(job_group_selected)
+		print(job_run_list)
+
+
 		if job_group_selected != 'Custom':
 			job_feature_selected = job_run_list[0]
 		else:
@@ -193,7 +305,9 @@ class JobRobotRun(View):
 
 class JobView(View):
 	template_name = 'job_view.html'
-	robot_data = GetRobotService().get_robot_service()
+	robot_service_data = GetRobotService()
+	robot_data = robot_service_data.get_robot_service()
+	
 	get_model_info = GetModelInfo()
 
 	def get(self, request, job_group_selected=None, time_stamp=None, *args, **kwargs):
@@ -237,8 +351,18 @@ class JobView(View):
 				count += 1
 				input_job_d.append(each_input_job_d)
 
+			# @task(name="justsleeps")
+			# def temp1():
+			# 	time.sleep(10)
+
+			
 			print('STARTED')
-			self.robot_data.run_jobs(input_job_d)
+			print(input_job_d)
+			# run_jobs.delay(input_job_d)
+
+			# run_jobs(input_job_d)
+			
+			# temp1.delay()
 			print('END')
 		
 			# download_thread = threading.Thread(target=self.robot_data.run_jobs, args=input_job_d)
@@ -266,8 +390,11 @@ class JobView(View):
 						each_job_result_data.get('testsuite_result')))
 			else:
 				job_testsuite_result.append((testsuite_name,'Error'))
-			for each_testcase_name in testcases_list:
-					result_each_id.append(each_testcase_name['testcase_result'])
+			if testcases_list:
+				for each_testcase_name in testcases_list:
+						result_each_id.append(each_testcase_name['testcase_result'])
+			else:
+				result_each_id.append('ERROR')
 
 		print(result_each_id)
 		#compute the final result

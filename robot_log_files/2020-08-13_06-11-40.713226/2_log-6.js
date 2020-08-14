@@ -1,3 +1,0 @@
-window.keywords6 = [[0,1,2,0,3,4,0,0,[1,45,0],[],[[45,0,5]]],[0,6,2,0,7,8,0,0,[1,46,6],[],[[52,0,9],[52,0,10]]]];
-window.strings6 = ["*","*Set Log Level","*BuiltIn","*<p>Sets the log threshold to the specified level and returns the old level.\x3c/p>","*TRACE","*Return: b'INFO'","*Run Keyword If","*<p>Runs the given keyword with the given arguments, if <code>condition\x3c/code> is true.\x3c/p>","*\"${duts_list}\"!=\"none\", setup_testrun_env, /home/ubuntu/roboframe/tests/routing","*Arguments: [ '\"none\"!=\"none\"' | 'setup_testrun_env' | '/home/ubuntu/roboframe/tests/routing' ]","*Return: None"];
-window.fileLoading.notify("2_log-6.js");
