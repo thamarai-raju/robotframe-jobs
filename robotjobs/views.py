@@ -124,7 +124,6 @@ class GetRobotService():
 class GetModelInfo():
 
 	def get_feature_by_tag(self, group_name):
-		print(group_name)
 		return list(set([x.testsuite for x in Testdata.objects.filter(tag__name=group_name)]))
 
 	def get_testsuites_by_feature(self, group_name, feature_name):
@@ -148,12 +147,12 @@ class JobScheduler(View):
 
 		#only when a update is needed
 		# load_testdata_to_db()
-		letswaitalot.delay(5)
-		print('escape')
+		# letswaitalot.delay(5)
+		# print('escape')
 
 		#add the full and custom to the above
-		job_group_info_view = ['Sanity','Intermediate','Full','Custom']
-		# job_group_selected = 'Sanity'
+		job_group_info_view = ['sanity','intermediate','full','custom']
+		# job_group_selected = 'sanity'
 		# job_group_selected = None
 		job_run_list = None
 		test_suite_list = None
@@ -185,20 +184,20 @@ class JobGroup(View):
 		# #get all job groups
 		# job_group_info_view = job_group_info.keys()
 		#add the full and custom to the above
-		job_group_info_view = ['Sanity','Intermediate','Full','Custom']
+		job_group_info_view = ['sanity','intermediate','full','custom']
 		
 		#get the list of suite names in the group
 		job_run_list = self.get_model_info.get_feature_by_tag(job_group_selected)
 		print(job_run_list)
 
 
-		if job_group_selected != 'Custom':
+		if job_group_selected != 'custom':
 			job_feature_selected = job_run_list[0]
 		else:
 			job_feature_selected = None
 
 		test_suite_list = self.get_model_info.get_testsuites_by_feature(job_group_selected, job_feature_selected)
-		if job_group_selected != 'Custom':
+		if job_group_selected != 'custom':
 			job_testsuite_selected = test_suite_list[0]
 		else:
 			job_testsuite_selected = None
@@ -233,13 +232,13 @@ class JobFeature(View):
 		# #get all job groups
 		# job_group_info_view = job_group_info.keys()
 		#add the full and custom to the above
-		job_group_info_view = ['Sanity','Intermediate','Full','Custom']
+		job_group_info_view = ['sanity','intermediate','full','custom']
 		
 		#get the list of suite names in the group
 		job_run_list = self.get_model_info.get_feature_by_tag(job_group_selected)
 		
 		test_suite_list = self.get_model_info.get_testsuites_by_feature(job_group_selected, job_feature_selected)
-		if job_group_selected != 'Custom':
+		if job_group_selected != 'custom':
 			job_testsuite_selected = test_suite_list[0]
 		else:
 			job_testsuite_selected = None
@@ -271,7 +270,7 @@ class JobTestsuite(View):
 	def get(self, request, job_group_selected=None, job_feature_selected=None,job_testsuite_selected=None, *args, **kwargs):
 
 		#add the full and custom to the above
-		job_group_info_view = ['Sanity','Intermediate','Full','Custom']
+		job_group_info_view = ['sanity','intermediate','full','custom']
 		
 		#get the list of suite names in the group
 		job_run_list = self.get_model_info.get_feature_by_tag(job_group_selected)
@@ -326,8 +325,8 @@ class JobView(View):
 				{
 					'testsuite_id':'2',
 					'suite_name':'route_manager_cli_tests',
-					'include_tags':['Sanity'],
-					# 'exclude_tags':['Sanity'],
+					'include_tags':['sanity'],
+					# 'exclude_tags':['sanity'],
 					'testcases':[],
 				},
 				# {
@@ -341,7 +340,7 @@ class JobView(View):
 			job_testsuite_list = self.get_model_info.get_testsuite_by_tag(job_group_selected)
 			input_job_d = []
 			count =1
-			include_tags = [job_group_selected] if job_group_selected != 'Full' else []
+			include_tags = [job_group_selected] if job_group_selected != 'full' else []
 			for each_job_testsuite in job_testsuite_list:
 				each_input_job_d = {
 						'testsuite_id': str(count),

@@ -29,7 +29,7 @@ def load_testdata_to_db():
                         test_suite =  p[-1]
                         tags = v.get("testcase_tags",None)
                         testcases= v.get("testcase",None)
-                        raw_tag_names = "|".join(tags)+'|'+'Full'
+                        raw_tag_names = "|".join(tags)+'|'+'full'
                         print "raw tag", raw_tag_names
                         testdata = Testdata()
                         testdata.testsuite = feature
