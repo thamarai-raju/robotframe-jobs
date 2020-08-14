@@ -1,0 +1,36 @@
+navbar.navbar-expand-lg.navbar-light.bg-dark{
+    color: white;
+}
+​
+.navbar.small {
+    width: 30%;
+    margin-left: 50px;
+}
+​
+.navbar.medium {
+    width: 80%;
+    margin-left: 50px;
+}
+​
+.table {
+    margin: 0px;
+}
+
+<<<<<<< HEAD:robotjobs/static/main.css
+.flexwrap {
+	flex-wrap: block !important;
+=======
+.secondrow {
+    overflow: scroll;
+    bottom: 0;
+    right: 0;
+    height: 250px;
+    width: 500px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.content {
+    overflow-y: auto;
+>>>>>>> off-css:robotjobs/static/main.scss
+}
