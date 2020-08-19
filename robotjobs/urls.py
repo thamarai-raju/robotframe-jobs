@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'jobview/(?P<time_stamp>[^//]+)$', views.JobView.as_view(), name='job_view'),
     url(r'jobview/(?P<time_stamp>.*)/(?P<job_suite_selected>[^//]+)$', views.JobViewSuite.as_view(), name='job_view_suite'), 
     url(r'completed/$', login_required(views.JobCompleted.as_view(), login_url='login'), name='job_completed'), 
+    url(r'gitbranch/(?P<branch_name>.*)$', login_required(views.GitBranchSelect.as_view(), login_url='login'), name='git_branch'), 
     
     
     url(r"^", include("django.contrib.auth.urls")),

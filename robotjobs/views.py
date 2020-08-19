@@ -4,8 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.views import View
 from celery.decorators import task
-#from lib.django.robot_execute import *
-
+from lib.django.robot_execute import *
 from .management.commands.load_test_data_to_db import load_testdata_to_db
 from .models import *
 import threading
@@ -16,8 +15,7 @@ import re
 class GetRobotService():
 
 	def get_robot_service(self):
-		return None
-#		return RobotExecute()
+		return RobotExecute()
 
 
 class GetModelInfo():
@@ -559,4 +557,19 @@ class JobCompleted(View):
 
 	def post(self, request, *args, **kwargs):
 		return render(request, self.template_name, context)		
+
+
+
+class GitBranchSelect(View):
+	template_name = 'job_scheduler.html'
+	robot_data = GetRobotService().get_robot_service()
+
+	def get(self, request,branch_name=None, *args, **kwargs):
+
+		load_testdata_to_db(branch_name=branch_name, git_clone=True, force_clone=True)
+		return JobScheduler().get(request, job_custom_run=True)
+
+	def post(self, request, *args, **kwargs):
+		return render(request, self.template_name, {})
+		
 

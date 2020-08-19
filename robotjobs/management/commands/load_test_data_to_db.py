@@ -2,8 +2,8 @@ import sys
 import os
 import shutil
 from robotjobs.models import Testdata, Tag
-#from lib.django.robot_testdata import RobotTestData
-#from git import Repo
+from lib.django.robot_testdata import RobotTestData
+from git import Repo
 
 def clone_repo(path):
     sys.path.append(path) 
@@ -19,8 +19,13 @@ def clone_repo(path):
         return False
     return True
 
-def load_testdata_to_db(git_clone=True):
-    if len(Testdata.objects.all()) == 0 and git_clone:
+def load_testdata_to_db(branch_name='master', git_clone=True, force_clone=False):
+    return
+    if force_clone:
+        Testdata.objects.all().delete()
+        Tag.objects.all().delete()
+        print "DB data successfully deleted"
+    if len(Testdata.objects.all()) == 0 and len(Tag.objects.all()) == 0 and git_clone:
         path='/tmp/roboframe'
         if clone_repo(path):
             test_data_obj = RobotTestData(path)
